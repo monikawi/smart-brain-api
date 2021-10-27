@@ -29,7 +29,7 @@ app.use(cors());
 
 
 
-app.get('/', (req, res)=> { res.send(db.users) })
+app.get('/', (req, res)=> { res.send('Connected to smart-brain-api') })
 app.post('/login', loginController.handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { registerController.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profileController.handleProfileGet(req, res, db)})
