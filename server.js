@@ -38,6 +38,6 @@ app.post('/imageurl', (req, res) => { clarifaiController.handleApiCall(req, res)
 
 
 
-app.listen(process.env.PORT, () => {
-  console.log('Running on port 3030')
+app.listen(process.env.PORT || 3030, () => {
+  console.log(`Running on port ${process.env.PORT}`)
 });
