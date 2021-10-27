@@ -24,28 +24,3 @@ const handleSignin = (db, bcrypt) => (req, res) => {
   module.exports = {
     handleSignin: handleSignin
   }
-
-
-//OLD
-// app.post('/login', (req, res) => {
-//   const { email, password } = req.body;
-
-//   knex.select('email', 'hash')
-//   .from('login')
-//   .where('email', '=', email)
-//   .then(data => {
-//     const found = bcrypt.compareSync(password, data[0].hash);
-//     if (found) {
-//       return knex.select('*')
-//       .from('users')
-//       .where('email', '=', email)
-//       .then(user => {
-//         res.json(user[0])
-//       })
-//       .catch(err => res.status(400).json('Unable to log in'))
-//     } else {
-//       res.status(400).json('Wrong credentials');
-//     }
-//   })
-//   .catch(err => res.status(400).json('Wrong credentials'))
-// })
