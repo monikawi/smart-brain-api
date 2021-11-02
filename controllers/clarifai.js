@@ -1,4 +1,4 @@
-const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
+const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
 
@@ -9,7 +9,6 @@ metadata.set("authorization", `Key ${process.env.CLARIFAI_API}`);
 const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
     {
-      // This is the model ID of a publicly available General model. You may use any other public or custom model ID.
       model_id: "a403429f2ddf4b49b307e318f00e528b",
       inputs: [{data: {image: {url: req.body.input}}}]
     },
@@ -30,15 +29,14 @@ const handleApiCall = (req, res) => {
   );
 }
 
-const handleImage = (req, res, db) => {
-  const { id } = req.body;
-  db('users').where('id', '=', id)
-  .increment('entries', 1)
-  .returning('entries')
-  .then(entries => {
+const handleImage = async (req, res, db) => {
+  try {
+    const { id } = req.body;
+    const entries = await db('users').where('id', '=', id).increment('entries', 1).returning('entries');
     res.json(entries[0]);
-  })
-  .catch(err => res.status(400).json('Unable to get entries'))
+  } catch (e) {
+    res.status(400).json('Unable to get entries');
+  }
 }
 
 module.exports = {
